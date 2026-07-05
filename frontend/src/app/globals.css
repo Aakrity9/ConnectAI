@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #F7F8FC;
+  --foreground: #1F1F2E;
+  
+  --primary: #6D5CFF;
+  --primary-light: #8B7EFF;
+  --secondary: #FF8FA3;
+  --accent: #FFD166;
+  
+  --gradient-start: #A98DFF;
+  --gradient-middle: #D7C8FF;
+  --gradient-end: #FFB7A7;
+  
+  --glow-purple: rgba(109, 92, 255, 0.6);
+  --glow-pink: rgba(255, 143, 163, 0.5);
+  --glow-gold: rgba(255, 209, 102, 0.5);
+
+  --font-poppins: 'Poppins', sans-serif;
+}
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-gradient-start: var(--gradient-start);
+  --color-gradient-middle: var(--gradient-middle);
+  --color-gradient-end: var(--gradient-end);
+
+  --color-glow-purple: var(--glow-purple);
+  --color-glow-pink: var(--glow-pink);
+  --color-glow-gold: var(--glow-gold);
+
+  --font-sans: var(--font-poppins);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins);
+}
+
+/* ========== GLASSMORPHISM ========== */
+.glass {
+  background: rgba(255, 255, 255, 0.42);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 8px 32px 0 rgba(31, 38, 135, 0.07),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
+}
+
+.glass-dark {
+  background: rgba(31, 31, 46, 0.45);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Shimmer sweep for glass cards */
+.glass-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.glass-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 60%
+  );
+  transform: translateX(-100%);
+  transition: none;
+  pointer-events: none;
+}
+.glass-shimmer:hover::after {
+  animation: shimmer 0.8s ease-out forwards;
+}
+
+/* ========== KEYFRAME ANIMATIONS ========== */
+
+/* Shimmer sweep */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Gentle floating */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out infinite;
+  animation-delay: 3s;
+}
+
+/* Glow pulse for network connection lines */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.5; filter: drop-shadow(0 0 3px var(--glow-purple)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 8px var(--glow-purple)); }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+
+/* Ambient particle floating (vertical drift) */
+@keyframes particle-drift {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.15; }
+  25% { opacity: 0.25; }
+  50% { transform: translateY(-40px) translateX(15px) scale(1.1); opacity: 0.2; }
+  75% { opacity: 0.12; }
+  100% { transform: translateY(0) translateX(0) scale(1); opacity: 0.15; }
+}
+
+/* Dashed line animation */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+
+.animate-dash {
+  stroke-dasharray: 6 4;
+  animation: dash 1.5s linear infinite;
+}
+
+/* Scroll reveal helper (used by framer-motion, but provides fallback) */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hub ring rotation */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}

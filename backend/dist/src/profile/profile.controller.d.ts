@@ -1,0 +1,51 @@
+import { ProfileService } from './profile.service';
+export declare class ProfileController {
+    private readonly profileService;
+    constructor(profileService: ProfileService);
+    getProfile(req: any): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string | null;
+        photo: string | null;
+        college: string | null;
+        company: string | null;
+        degree: string | null;
+        experience: string | null;
+        skills: string[];
+        interests: string[];
+        careerGoals: string[];
+        startupInterest: boolean;
+        hackathonInterest: boolean;
+        lookingFor: string[];
+        hobbies: string[];
+        socialLinks: import("@prisma/client/runtime/client").JsonValue | null;
+        portfolio: string | null;
+        availability: string | null;
+        attendingSolo: boolean;
+        userId: string;
+    }>;
+    updateProfile(req: any, body: any): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string | null;
+        photo: string | null;
+        college: string | null;
+        company: string | null;
+        degree: string | null;
+        experience: string | null;
+        skills: string[];
+        interests: string[];
+        careerGoals: string[];
+        startupInterest: boolean;
+        hackathonInterest: boolean;
+        lookingFor: string[];
+        hobbies: string[];
+        socialLinks: import("@prisma/client/runtime/client").JsonValue | null;
+        portfolio: string | null;
+        availability: string | null;
+        attendingSolo: boolean;
+        userId: string;
+    } | null>;
+}

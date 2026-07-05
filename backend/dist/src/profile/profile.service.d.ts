@@ -1,0 +1,54 @@
+import { PrismaService } from '../prisma/prisma.service';
+import { AiService } from '../ai/ai.service';
+export declare class ProfileService {
+    private prisma;
+    private aiService;
+    constructor(prisma: PrismaService, aiService: AiService);
+    getProfileByClerkId(clerkId: string): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string | null;
+        photo: string | null;
+        college: string | null;
+        company: string | null;
+        degree: string | null;
+        experience: string | null;
+        skills: string[];
+        interests: string[];
+        careerGoals: string[];
+        startupInterest: boolean;
+        hackathonInterest: boolean;
+        lookingFor: string[];
+        hobbies: string[];
+        socialLinks: import("@prisma/client/runtime/client").JsonValue | null;
+        portfolio: string | null;
+        availability: string | null;
+        attendingSolo: boolean;
+        userId: string;
+    }>;
+    updateProfileByClerkId(clerkId: string, data: any): Promise<{
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string | null;
+        photo: string | null;
+        college: string | null;
+        company: string | null;
+        degree: string | null;
+        experience: string | null;
+        skills: string[];
+        interests: string[];
+        careerGoals: string[];
+        startupInterest: boolean;
+        hackathonInterest: boolean;
+        lookingFor: string[];
+        hobbies: string[];
+        socialLinks: import("@prisma/client/runtime/client").JsonValue | null;
+        portfolio: string | null;
+        availability: string | null;
+        attendingSolo: boolean;
+        userId: string;
+    } | null>;
+    syncProfileEmbedding(profileId: string): Promise<void>;
+}

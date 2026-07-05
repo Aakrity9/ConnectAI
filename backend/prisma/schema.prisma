@@ -1,0 +1,104 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  clerkId   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  profile   Profile?
+}
+
+model Profile {
+  id                String   @id @default(uuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name              String?
+  photo             String?
+  college           String?
+  company           String?
+  degree            String?
+  experience        String?
+  skills            String[]
+  interests         String[]
+  careerGoals       String[]
+  startupInterest   Boolean  @default(false)
+  hackathonInterest Boolean  @default(false)
+  lookingFor        String[] // e.g. "Mentor", "Co-founder", "Team", "Friends", "Investors"
+  hobbies           String[]
+  socialLinks       Json?    // e.g. { linkedin: "...", github: "..." }
+  portfolio         String?
+  availability      String?
+  attendingSolo     Boolean  @default(false)
+  
+  // Vector embeddings for pgvector (unsupported type in Prisma directly, but we map it)
+  // We can write it as a column and handle vector operations via raw SQL queries
+  embedding         Unsupported("vector(1536)")?
+
+  sentRequests     ConnectionRequest[] @relation("SentRequests")
+  receivedRequests ConnectionRequest[] @relation("ReceivedRequests")
+  
+  sentMessages     Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+
+  groups          GroupMember[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+enum ConnectionStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+}
+
+model ConnectionRequest {
+  id          String           @id @default(uuid())
+  senderId    String
+  sender      Profile          @relation("SentRequests", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId  String
+  receiver    Profile          @relation("ReceivedRequests", fields: [receiverId], references: [id], onDelete: Cascade)
+  status      ConnectionStatus @default(PENDING)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@unique([senderId, receiverId])
+}
+
+model Message {
+  id         String   @id @default(uuid())
+  senderId   String
+  sender     Profile  @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId String
+  receiver   Profile  @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+  content    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Group {
+  id          String        @id @default(uuid())
+  name        String
+  description String?
+  members     GroupMember[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model GroupMember {
+  id        String   @id @default(uuid())
+  groupId   String
+  group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([groupId, profileId])
+}
