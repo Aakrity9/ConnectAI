@@ -12,6 +12,7 @@ import {
   Edit3, LogOut, Globe, Heart, Star, Clock, Bell
 } from 'lucide-react';
 import { GlassCard, PremiumButton, Badge } from '@/components/ui-custom';
+import NetworkingHealthScore from '@/components/NetworkingHealthScore';
 
 export default function Dashboard() {
   const { getToken } = useAuth();
@@ -354,6 +355,11 @@ export default function Dashboard() {
                 <p className="text-[10px] text-foreground/60 font-medium">Groups Joined</p>
               </GlassCard>
             </div>
+
+            {/* AI Networking Health Score */}
+            {profile && (
+              <NetworkingHealthScore profile={profile} variant="full" />
+            )}
 
             {/* Quick Actions */}
             <GlassCard className="border-primary/10">
@@ -827,6 +833,13 @@ export default function Dashboard() {
                 </div>
               </div>
             </GlassCard>
+
+            {/* Networking Health Score Card */}
+            {profile && (
+              <GlassCard className="border-primary/10">
+                <NetworkingHealthScore profile={profile} variant="compact" />
+              </GlassCard>
+            )}
 
             {/* Preferences */}
             <GlassCard className="border-foreground/5">

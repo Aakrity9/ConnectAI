@@ -164,3 +164,13 @@ body {
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
 }
+
+/* Score ring glow pulse */
+@keyframes score-glow {
+  0%, 100% { filter: drop-shadow(0 0 4px currentColor); }
+  50% { filter: drop-shadow(0 0 12px currentColor); }
+}
+
+.animate-score-glow {
+  animation: score-glow 2.5s ease-in-out infinite;
+}
